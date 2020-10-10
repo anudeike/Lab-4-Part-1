@@ -18,7 +18,7 @@ Process *parse_file(FILE * f)
 	size_t s = 0;
 	char *headers = NULL;
 	size_t line_len = 0;
-	//ignore the headers as we don't need them for storing data
+	//ignore the headers 
 	line_len = getline(&headers, &line_len, f);
 	free(headers);
 
