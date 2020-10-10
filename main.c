@@ -19,34 +19,36 @@ typedef int (*Comparer) (const void *a, const void *b);
 /**
  * compares by priority
  * Assume: 
- * - Process ids will be unique
+ * - Process ids are unique
  * - No 2 processes will have same arrival time
  */
- 
+
 int my_comparer_priority(const void *this, const void *that) {
+
 	int first = *(((int*)this + 2) );
 	int second = *(((int*)that + 2) );
 	return (second - first);
 }
 
 /**
- * compares 2 processes by arrival time
+ * compares by arrival time
  * You can assume: 
  * - Process ids will be unique
  * - No 2 processes will have same arrival time
  */
-int my_comparer_at(const void *this, const void *that) {
+int my_comparer_arrival_time(const void *this, const void *that) {
+
 	int first = *(((int*)this + 1) );
 	int second = *(((int*)that + 1) );
 	return (first - second);
 }
 
 int main(int argc, char *argv[]) {
-	// Flag to determine which sort to run.
+	// choose which one to run
 	int ran = 0;
 	for (int i = 0; i < 2; i++) {
 		if (argc < 2) {
-				 fprintf(stderr, "Usage: ./func-ptr <input-file-path>\n");
+				 fprintf(stderr, "Was used wrong: Usage: ./func-ptr <input-file-path>\n");
 				 fflush(stdout);
 				 return 1;
 		}
@@ -69,7 +71,7 @@ int main(int argc, char *argv[]) {
 		Comparer process_comparer;
 		if (ran == 0) {
 			printf("Sorting by priority\n");
-			process_comparer = &my_comparer_p;
+			process_comparer = &my_comparer_priority;
 		} else {
 			printf("Sorting by arrival time\n");
 			process_comparer = &my_comparer_at;
