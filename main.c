@@ -53,9 +53,7 @@ int main(int argc, char *argv[]) {
 				 return 1;
 		}
 
-		/*******************/
-		/* Parse the input */
-		/*******************/
+		// parse input
 		FILE *input_file = fopen(argv[1], "r");
 		if (!input_file) {
 				 fprintf(stderr, "Error: Invalid filepath\n");
@@ -65,16 +63,14 @@ int main(int argc, char *argv[]) {
 
 		Process *processes = parse_file(input_file);
 
-		/*******************/
-		/* sort the input  */
-		/*******************/
+		// sort input
 		Comparer process_comparer;
 		if (ran == 0) {
 			printf("Sorting by priority\n");
 			process_comparer = &my_comparer_priority;
 		} else {
 			printf("Sorting by arrival time\n");
-			process_comparer = &my_comparer_at;
+			process_comparer = &my_comparer_arrival_time;
 		}
 		
 	#if DEBUG
@@ -88,9 +84,7 @@ int main(int argc, char *argv[]) {
 
 		qsort(processes, P_SIZE, sizeof(Process), process_comparer);
 
-		/**************************/
-		/* print the sorted data  */
-		/**************************/
+		// Print sorted
 
 		for (int i = 0; i < P_SIZE; i++) {
 					printf("%d (%d, %d)\n",
@@ -100,9 +94,7 @@ int main(int argc, char *argv[]) {
 		fflush(stdout);
 		fflush(stderr);
 
-		/************/
-		/* clean up */
-		/************/
+		// clean up any extra memory
 		free(processes);
 		fclose(input_file);
 		ran++;
